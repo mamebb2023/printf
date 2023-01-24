@@ -3,7 +3,7 @@
 /**
  * _printf - Prints the correct function
  * @format: the character string
- * 
+ *
  * Return: the length of the string
  */
 
