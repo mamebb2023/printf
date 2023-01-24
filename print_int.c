@@ -1,37 +1,91 @@
 #include "main.h"
 
 /**
- * printf_hex_aux - prints an hexgecimal number.
- * @num: arguments
- *
- * Return: counter
+ * printf_int - prints integer
+ * @args: argument to print
+ * Return: number of characters printed
  */
-int printf_hex_aux(unsigned long int num)
+int printf_int(va_list args)
 {
-	long int i;
-	long int *array;
-	long int counter = 0;
-	unsigned long int temp = num;
+	int n = va_arg(args, int);
+	int num, last = n % 10, digit, exp = 1;
+	int  i = 1;
 
-	while (num / 16 != 0)
-	{
-		num /= 16;
-		counter++;
-	}
-	counter++;
-	array = malloc(counter * sizeof(long int));
+	n = n / 10;
+	num = n;
 
-	for (i = 0; i < counter; i++)
+	if (last < 0)
 	{
-		array[i] = temp % 16;
-		temp /= 16;
+		_putchar('-');
+		num = -num;
+		n = -n;
+		last = -last;
+		i++;
 	}
-	for (i = counter - 1; i >= 0; i--)
+	if (num > 0)
 	{
-		if (array[i] > 9)
-			array[i] = array[i] + 39;
-		_putchar(array[i] + '0');
+		while (num / 10 != 0)
+		{
+			exp = exp * 10;
+			num = num / 10;
+		}
+		num = n;
+		while (exp > 0)
+		{
+			digit = num / exp;
+			_putchar(digit + '0');
+			num = num - (digit * exp);
+			exp = exp / 10;
+			i++;
+		}
 	}
-	free(array);
-	return (counter);
+	_putchar(last + '0');
+
+	return (i);
+}
+
+/**
+ * printf_dec - prints decimal
+ * @args: argument to print
+ * Return: number of characters printed
+ */
+
+int printf_dec(va_list args)
+{
+	int n = va_arg(args, int);
+	int num, last = n % 10, digit;
+	int  i = 1;
+	int exp = 1;
+
+	n = n / 10;
+	num = n;
+
+	if (last < 0)
+	{
+		_putchar('-');
+		num = -num;
+		n = -n;
+		last = -last;
+		i++;
+	}
+	if (num > 0)
+	{
+		while (num / 10 != 0)
+		{
+			exp = exp * 10;
+			num = num / 10;
+		}
+		num = n;
+		while (exp > 0)
+		{
+			digit = num / exp;
+			_putchar(digit + '0');
+			num = num - (digit * exp);
+			exp = exp / 10;
+			i++;
+		}
+	}
+	_putchar(last + '0');
+
+	return (i);
 }
